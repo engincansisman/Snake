@@ -25,13 +25,25 @@ public class SnakeHead : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow) && direction != Vector2.down)
-            direction = Vector2.up;
+            {
+                direction = Vector2.up;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         else if (Input.GetKeyDown(KeyCode.DownArrow) && direction != Vector2.up)
-            direction = Vector2.down;
+            {
+                direction = Vector2.down;
+            transform.rotation = Quaternion.Euler(0, 0, -180);
+            }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) && direction != Vector2.right)
-            direction = Vector2.left;
+            {
+                direction = Vector2.left;
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+            }
         else if (Input.GetKeyDown(KeyCode.RightArrow) && direction != Vector2.left)
-            direction = Vector2.right;
+            {
+                direction = Vector2.right;
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+            }
     }
 
     void FixedUpdate()
@@ -59,7 +71,7 @@ public class SnakeHead : MonoBehaviour
             growSnake = false;
         }
 
-        // Kuyruk parçalarýnýn pozisyonlarýný güncelle
+        // Kuyruk parï¿½alarï¿½nï¿½n pozisyonlarï¿½nï¿½ gï¿½ncelle
         for (int i = 0; i < snakeBodies.Count; i++)
         {
             if (i + 1 < positions.Count)
@@ -68,7 +80,7 @@ public class SnakeHead : MonoBehaviour
             }
         }
 
-        // Pozisyon listesini sýnýrla
+        // Pozisyon listesini sï¿½nï¿½rla
         if (positions.Count > snakeBodies.Count + 1)
         {
             positions.RemoveAt(positions.Count - 1);
@@ -82,11 +94,13 @@ public class SnakeHead : MonoBehaviour
             Destroy(collision.gameObject);
             growSnake = true;
             FindObjectOfType<GameManager>().SpawnFood();
+            FindObjectOfType<GameManager>().UpdateScore(10);
+            
         }
         else if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("SnakeBody"))
         {
-            // Oyun Bitti
-            Time.timeScale = 0; // Oyunu durdur
+            
+            FindObjectOfType<GameManager>().GameOVer();
         }
     }
 }
