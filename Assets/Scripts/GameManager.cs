@@ -84,8 +84,18 @@ public class GameManager : MonoBehaviour
     }
     public void PlayFoodEffect(Vector2 position)
     {
-        Instantiate(foodParticlePrefab, position, Quaternion.identity);
-        audioSource.PlayOneShot(foodSound);
+        if (foodParticlePrefab!=null)
+        {
+            Instantiate(foodParticlePrefab, position, Quaternion.identity);
+        }
+        if (foodSound != null)
+        {
+            audioSource.PlayOneShot(foodSound);
+        }
+        else
+        {
+            Debug.Log("foodSound is not assigned in the GameManager.");
+        }
     }
     
 }

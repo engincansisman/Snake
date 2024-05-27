@@ -91,10 +91,12 @@ public class SnakeHead : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Food"))
         {
+            Vector2 foodPos = collision.gameObject.transform.position;
             Destroy(collision.gameObject);
             growSnake = true;
             FindObjectOfType<GameManager>().SpawnFood();
             FindObjectOfType<GameManager>().UpdateScore(10);
+            FindObjectOfType<GameManager>().PlayFoodEffect(foodPos);
             
         }
         else if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("SnakeBody"))
