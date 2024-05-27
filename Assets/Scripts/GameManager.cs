@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public  TextMeshProUGUI timerText;
     public GameObject gameOverPanel;
+    public TextMeshProUGUI gameOverText;
     public GameObject foodParticlePrefab;
     public AudioClip foodSound;
     private int score = 0;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
         SpawnFood();
         UpdateScore(0);
         gameOverPanel.SetActive(false);
+        
+
     }
 
     private static void UpdateScore()
@@ -50,12 +53,18 @@ public class GameManager : MonoBehaviour
                 GameOVer();
             }
         }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartGame();
+
+        }
     }
 
     public  void GameOVer()
     {
      gameOverPanel.SetActive(true);
-        Time.timeScale=0f;
+     gameOverText.text = "Press 'R' to Restart";
+     Time.timeScale=0f;
     }
     public void UpdateScore(int points)
     {
@@ -79,8 +88,9 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+        
     }
     public void PlayFoodEffect(Vector2 position)
     {
@@ -94,7 +104,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("foodSound is not assigned in the GameManager.");
+            Debug.LogWarning("foodSound is not assigned in the GameManager.");
         }
     }
     
